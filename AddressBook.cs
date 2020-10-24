@@ -6,9 +6,18 @@ namespace UserAddressBook
 {
     class AddressBook
     {
+        /// Creates a list to store contact
+        List<Contact> contactList;
+
         /// <summary>
-        /// Adds the contact.
+        /// Initializes a new instance of the <see cref="AddressBook"/> class.
         /// </summary>
+        public AddressBook()
+        {
+            contactList = new List<Contact>();
+        }
+
+        /// Adds the contact  
         public void AddContact()
         {
             Console.WriteLine("Enter First Name");
@@ -30,6 +39,7 @@ namespace UserAddressBook
 
             ///Creates a reference of Contact class
             Contact contact = new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email);
+            contactList.Add(contact);
             Console.WriteLine(contact);
         }
     }
