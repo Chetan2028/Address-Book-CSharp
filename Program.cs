@@ -6,7 +6,9 @@ namespace UserAddressBook
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            ///Creates a reference of AddressBook
+            AddressBook addressBook = new AddressBook();
+            addressBook.AddContact();
         }
     }
 }
