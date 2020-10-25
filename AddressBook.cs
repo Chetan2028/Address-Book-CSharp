@@ -30,7 +30,7 @@ namespace UserAddressBook
             string city = Console.ReadLine();
             Console.WriteLine("Enter your state");
             string state = Console.ReadLine();
-            Console.WriteLine("Enteryour zip code");
+            Console.WriteLine("Enter your zip code");
             int zip = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter your phone number");
             long phoneNumber = Convert.ToInt64(Console.ReadLine());
@@ -40,7 +40,7 @@ namespace UserAddressBook
             ///Creates a reference of Contact class
             Contact contact = new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email);
             contactList.Add(contact);
-            Console.WriteLine(contact);
+            Console.WriteLine("Contact Added Successfully!!!!!");
         }
 
         /// <summary>
@@ -51,7 +51,9 @@ namespace UserAddressBook
             Console.WriteLine("Enter your choice");
             Console.WriteLine("Press 1 to Add contact");
             Console.WriteLine("Press 2 to Edit contact");
-            Console.WriteLine("Press 3 to Exit");
+            Console.WriteLine("Press 3 to Delete contact");
+            Console.WriteLine("Press 4 to View Contact Details");
+            Console.WriteLine("Press 5 to Exit");
         }
 
         /// <summary>
@@ -82,6 +84,7 @@ namespace UserAddressBook
                 {
                     EditMenu();
                     EditContactList(contactList[index]);
+                    Console.WriteLine("Contact's Detail is modified successfully");
                 }
                 else
                 {
@@ -146,10 +149,58 @@ namespace UserAddressBook
             }
         }
 
+        /// <summary>
+        /// Deletes the contact.
+        /// </summary>
+        public void DeleteContact()
+        {
+            Console.WriteLine("Enter the Contact's First Name which you want to delete");
+            string firstName = Console.ReadLine();
+            Console.WriteLine("Enter the Contact's Last nane which you want to delete");
+            string lastName = Console.ReadLine();
+
+            for (int index = 0; index < contactList.Count; index++)
+            {
+                if (contactList[index].GetFirstName().Equals(firstName))
+                {
+                    if (contactList[index].GetLastName().Equals(lastName))
+                    {
+                        contactList.RemoveAt(index);
+                        Console.WriteLine("Contact deleted successfully!!!!!");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// This method is used to view the contact details
+        /// </summary>
+        public void ViewContact()
+        {
+            if(contactList.Count != 0)
+            {
+                for (int index = 0; index < contactList.Count; index++)
+                {
+                    Console.WriteLine("First Name      :       " + contactList[index].GetFirstName());
+                    Console.WriteLine("Last Name       :       " + contactList[index].GetLastName());
+                    Console.WriteLine("Address         :       " + contactList[index].GetAddress());
+                    Console.WriteLine("City            :       " + contactList[index].GetCity());
+                    Console.WriteLine("State           :       " + contactList[index].GetState());
+                    Console.WriteLine("Phone Number    :       " + contactList[index].GetPhoneNumber());
+                    Console.WriteLine("Zip             :       " + contactList[index].GetZip());
+                    Console.WriteLine("Email           :       " + contactList[index].GetEmail());
+                    Console.WriteLine("/************************************************************/");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Address Book is empty . No contacts to display");
+            }
+        }
         public void AddressBookMenu()
         {
             bool flag = true;
-            while(flag)
+            while (flag)
             {
                 DisplayMenu();
                 int choice = Convert.ToInt32(Console.ReadLine());
@@ -161,11 +212,17 @@ namespace UserAddressBook
                     case 2:
                         EditContact();
                         break;
+                    case 3:
+                        DeleteContact();
+                        break;
+                    case 4:
+                        ViewContact();
+                        break;
                     default:
                         flag = false;
                         break;
                 }
             }
-        } 
+        }
     }
 }
