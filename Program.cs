@@ -8,7 +8,7 @@ namespace UserAddressBook
         {
             ///Creates a reference of AddressBook
             AddressBook addressBook = new AddressBook();
-            addressBook.AddContact();
+            addressBook.AddressBookMenu();
         }
     }
 }
