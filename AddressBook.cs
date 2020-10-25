@@ -33,7 +33,7 @@ namespace UserAddressBook
             Console.WriteLine("Enteryour zip code");
             int zip = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter your phone number");
-            int phoneNumber = Convert.ToInt32(Console.ReadLine());
+            long phoneNumber = Convert.ToInt64(Console.ReadLine());
             Console.WriteLine("Enter your Email-Id");
             string email = Console.ReadLine();
 
@@ -42,5 +42,6 @@ namespace UserAddressBook
             contactList.Add(contact);
             Console.WriteLine(contact);
         }
+
     }
 }
