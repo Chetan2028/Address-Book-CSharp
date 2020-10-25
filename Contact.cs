@@ -13,7 +13,7 @@ namespace UserAddressBook
         string city;
         string state;
         int zip;
-        int phoneNumber;
+        long phoneNumber;
         string email;
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace UserAddressBook
         /// <param name="zip">The zip.</param>
         /// <param name="phoneNumber">The phone number.</param>
         /// <param name="email">The email.</param>
-        public Contact(string firstName, string lastName, string address, string city, string state, int zip, int phoneNumber, string email)
+        public Contact(string firstName, string lastName, string address, string city, string state, int zip, long phoneNumber, string email)
         {
             this.firstName = firstName;
             this.lastName = lastName;
