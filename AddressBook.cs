@@ -39,10 +39,61 @@ namespace UserAddressBook
 
             ///Creates a reference of Contact class
             Contact contact = new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email);
-            contactList.Add(contact);
-            Console.WriteLine("Contact Added Successfully!!!!!");
+
+            if(CheckingForSpaces(firstName, lastName))
+            {
+                Console.WriteLine("Please Enter Valid Contact Names");
+            }
+            else
+            {
+                CheckForDuplicates(contact, firstName, lastName);
+            }
+
         }
 
+        /// <summary>
+        /// Checking whether the Name of contact contains whitespaces or null
+        /// </summary>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastName">The last name.</param>
+        /// <returns></returns>
+        public bool CheckingForSpaces(string firstName , string lastName)
+        {
+            if (string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName))
+            {
+                return true;
+            }
+            return false;
+        }
+        /// <summary>
+        /// Checks for duplicates.
+        /// </summary>
+        /// <param name="contact">The contact.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastName">The last name.</param>
+        public void CheckForDuplicates(Contact contact , string firstName , string lastName)
+        {
+            if (contactList.Count == 0)
+            {
+                contactList.Add(contact);
+                Console.WriteLine("Contact Added Successfully!!!!!");
+            }
+            else
+            {
+                for (int index = 0; index < contactList.Count; index++)
+                {
+                    if (contactList[index].GetFirstName().Equals(firstName) && contactList[index].GetLastName().Equals(lastName))
+                    {
+                        Console.WriteLine("Contact already present");
+                    }
+                    else
+                    {
+                        contactList.Add(contact);
+                        Console.WriteLine("Contact Added Successfully!!!!!");
+                    }
+                }
+            }
+        }
         /// <summary>
         /// Displays the menu.
         /// </summary>
@@ -88,7 +139,7 @@ namespace UserAddressBook
                 }
                 else
                 {
-                    Console.WriteLine("First Name does not exist");
+                    Console.WriteLine("First Name Not found");
                 }
             }
         }
@@ -169,6 +220,10 @@ namespace UserAddressBook
                         Console.WriteLine("Contact deleted successfully!!!!!");
                     }
                 }
+                else
+                {
+                    Console.WriteLine("Contact name not  found");
+                }
             }
         }
 
@@ -177,7 +232,9 @@ namespace UserAddressBook
         /// </summary>
         public void ViewContact()
         {
-            if(contactList.Count != 0)
+            ///Checks for the length of List
+            ///If it is empty then it wont display any elements
+            if (contactList.Count != 0)
             {
                 for (int index = 0; index < contactList.Count; index++)
                 {
@@ -197,6 +254,9 @@ namespace UserAddressBook
                 Console.WriteLine("Address Book is empty . No contacts to display");
             }
         }
+        /// <summary>
+        /// This method provides the operations performed by Address Book
+        /// </summary>
         public void AddressBookMenu()
         {
             bool flag = true;
