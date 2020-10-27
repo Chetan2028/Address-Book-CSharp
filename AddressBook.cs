@@ -4,7 +4,7 @@ using System.Text;
 
 namespace UserAddressBook
 {
-    public class AddressBook
+    public class AddressBook : AddressBookImplementation
     {
         /// Creates a list to store contact
         List<Contact> contactList;
@@ -17,7 +17,9 @@ namespace UserAddressBook
             contactList = new List<Contact>();
         }
 
-        /// Adds the contact  
+        /// <summary>
+        /// Adds the contact.
+        /// </summary>
         public void AddContact()
         {
             Console.WriteLine("Enter First Name");
