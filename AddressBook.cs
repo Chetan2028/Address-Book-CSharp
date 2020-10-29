@@ -7,15 +7,10 @@ namespace UserAddressBook
     public class AddressBook : AddressBookImplementation
     {
         /// Creates a list to store contact
-        List<Contact> contactList;
+        List<Contact> contactList = new List<Contact>();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AddressBook"/> class.
-        /// </summary>
-        public AddressBook()
-        {
-            contactList = new List<Contact>();
-        }
+        /// To store address book in  Dictionary of address books
+        Dictionary<string, AddressBook> addressBookDictionary = new Dictionary<string, AddressBook>();
 
         /// <summary>
         /// Adds the contact.
@@ -50,7 +45,6 @@ namespace UserAddressBook
             {
                 CheckForDuplicates(contact, firstName, lastName);
             }
-
         }
 
         /// <summary>
@@ -106,7 +100,7 @@ namespace UserAddressBook
             Console.WriteLine("Press 2 to Edit contact");
             Console.WriteLine("Press 3 to Delete contact");
             Console.WriteLine("Press 4 to View Contact Details");
-            Console.WriteLine("Press 5 to Exit");
+            Console.WriteLine("Press 5 to exit");
         }
 
         /// <summary>
@@ -203,6 +197,17 @@ namespace UserAddressBook
         }
 
         /// <summary>
+        /// Addresses the book system display menu.
+        /// </summary>
+        public void AddressBookSystemDisplayMenu()
+        {
+            Console.WriteLine("Enter your choice");
+            Console.WriteLine("Press 1 to Add a Address book");
+            Console.WriteLine("Press 2 to Access a Address book");
+            Console.WriteLine("Press 3 to Exit");
+
+        }
+        /// <summary>
         /// Deletes the contact.
         /// </summary>
         public void DeleteContact()
@@ -284,6 +289,72 @@ namespace UserAddressBook
                         flag = false;
                         break;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the existing book.
+        /// </summary>
+        /// <returns></returns>
+        public string getExistingBookName()
+        {
+            Console.WriteLine("Enter the name of Address Book u want to access");
+            string name = Console.ReadLine();
+            return name;
+        }
+
+        /// <summary>
+        /// Creates the Address Book
+        /// </summary>
+        /// <returns></returns>
+        public string getAddressBookName()
+        {
+            Console.WriteLine("Enter the name of new Address Book");
+            string name = Console.ReadLine();
+            return name;
+        }
+        /// <summary>
+        /// Addresses the book system menu.
+        /// </summary>
+        public void AddressBookSystemMenu()
+        {
+            AddressBookSystemDisplayMenu();
+            int choice = Convert.ToInt32(Console.ReadLine());
+            switch (choice)
+            {
+                case 1:
+                    string bookName = getAddressBookName();
+                    if (addressBookDictionary.ContainsKey(bookName))
+                    {
+                        Console.WriteLine("Sorry book already exists with name " + bookName);
+                    }
+                    else
+                    {
+                        AddressBook addressBook = new AddressBook();
+                        addressBookDictionary.Add(bookName, addressBook);
+                        Console.WriteLine("address book with " + bookName  + "  is created");
+                        addressBook.AddressBookMenu();
+                    }
+                    break;
+                case 2:
+                    string existingBookName = getExistingBookName();
+                    if (addressBookDictionary.ContainsKey(existingBookName))
+                    {
+                        AddressBook addressBook = new AddressBook();
+                        Console.WriteLine("Welcome to " + existingBookName);
+                        addressBookDictionary[existingBookName].AddressBookMenu();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Sorry Address book does not exists");
+                    }
+                    break;
+                case 3:
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice!!!!!");
+                    break;
             }
         }
     }
