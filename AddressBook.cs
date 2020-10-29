@@ -42,7 +42,7 @@ namespace UserAddressBook
             ///Creates a reference of Contact class
             Contact contact = new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email);
 
-            if(CheckingForSpaces(firstName, lastName))
+            if (CheckingForSpaces(firstName, lastName))
             {
                 Console.WriteLine("Please Enter Valid Contact Names");
             }
@@ -59,7 +59,7 @@ namespace UserAddressBook
         /// <param name="firstName">The first name.</param>
         /// <param name="lastName">The last name.</param>
         /// <returns></returns>
-        public bool CheckingForSpaces(string firstName , string lastName)
+        public bool CheckingForSpaces(string firstName, string lastName)
         {
             if (string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName))
             {
@@ -73,7 +73,7 @@ namespace UserAddressBook
         /// <param name="contact">The contact.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastName">The last name.</param>
-        public void CheckForDuplicates(Contact contact , string firstName , string lastName)
+        public void CheckForDuplicates(Contact contact, string firstName, string lastName)
         {
             if (contactList.Count == 0)
             {
@@ -262,7 +262,7 @@ namespace UserAddressBook
         public void AddressBookMenu()
         {
             bool flag = true;
-            while (flag)
+            while(flag)
             {
                 DisplayMenu();
                 int choice = Convert.ToInt32(Console.ReadLine());
@@ -285,6 +285,7 @@ namespace UserAddressBook
                         break;
                 }
             }
+            
         }
     }
 }
