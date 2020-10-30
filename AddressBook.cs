@@ -318,43 +318,48 @@ namespace UserAddressBook
         /// </summary>
         public void AddressBookSystemMenu()
         {
-            AddressBookSystemDisplayMenu();
-            int choice = Convert.ToInt32(Console.ReadLine());
-            switch (choice)
+            bool flag = true;
+            while (flag)
             {
-                case 1:
-                    string bookName = getAddressBookName();
-                    if (addressBookDictionary.ContainsKey(bookName))
-                    {
-                        Console.WriteLine("Sorry book already exists with name " + bookName);
-                    }
-                    else
-                    {
-                        AddressBook addressBook = new AddressBook();
-                        addressBookDictionary.Add(bookName, addressBook);
-                        Console.WriteLine("address book with " + bookName  + "  is created");
-                        addressBook.AddressBookMenu();
-                    }
-                    break;
-                case 2:
-                    string existingBookName = getExistingBookName();
-                    if (addressBookDictionary.ContainsKey(existingBookName))
-                    {
-                        AddressBook addressBook = new AddressBook();
-                        Console.WriteLine("Welcome to " + existingBookName);
-                        addressBookDictionary[existingBookName].AddressBookMenu();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Sorry Address book does not exists");
-                    }
-                    break;
-                case 3:
-                    Environment.Exit(0);
-                    break;
-                default:
-                    Console.WriteLine("Invalid choice!!!!!");
-                    break;
+                AddressBookSystemDisplayMenu();
+                int choice = Convert.ToInt32(Console.ReadLine());
+                switch (choice)
+                {
+                    case 1:
+                        string bookName = getAddressBookName();
+                        if (addressBookDictionary.ContainsKey(bookName))
+                        {
+                            Console.WriteLine("Sorry book already exists with name " + bookName);
+                        }
+                        else
+                        {
+                            AddressBook addressBook = new AddressBook();
+                            addressBookDictionary.Add(bookName, addressBook);
+                            Console.WriteLine("address book with " + bookName + "  is created");
+                            addressBook.AddressBookMenu();
+                        }
+                        break;
+                    case 2:
+                        string existingBookName = getExistingBookName();
+                        if (addressBookDictionary.ContainsKey(existingBookName))
+                        {
+                            AddressBook addressBook = new AddressBook();
+                            Console.WriteLine("Welcome to " + existingBookName);
+                            addressBookDictionary[existingBookName].AddressBookMenu();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Sorry Address book does not exists");
+                        }
+                        break;
+                    case 3:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice!!!!!");
+                        flag = false;
+                        break;
+                }
             }
         }
     }
