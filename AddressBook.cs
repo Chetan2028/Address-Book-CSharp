@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace UserAddressBook
 {
@@ -11,6 +12,12 @@ namespace UserAddressBook
 
         /// To store address book in  Dictionary of address books
         Dictionary<string, AddressBook> addressBookDictionary = new Dictionary<string, AddressBook>();
+
+        //Dictionary to store Person name and city
+        Dictionary<string, string> cityDictionary = new Dictionary<string, string>();
+
+        //Dictionary to store Person name and state
+        Dictionary<string, string> stateDictionary = new Dictionary<string, string>();
 
         /// <summary>
         /// Adds the contact.
@@ -86,6 +93,7 @@ namespace UserAddressBook
                     {
                         contactList.Add(contact);
                         Console.WriteLine("Contact Added Successfully!!!!!");
+
                     }
                 }
             }
@@ -204,8 +212,9 @@ namespace UserAddressBook
             Console.WriteLine("Enter your choice");
             Console.WriteLine("Press 1 to Add a Address book");
             Console.WriteLine("Press 2 to Access a Address book");
-            Console.WriteLine("Press 3 to Exit");
-
+            Console.WriteLine("Press 3 to Search person by city");
+            Console.WriteLine("Press 4 to View Contacts By State or City");
+            Console.WriteLine("Press  5 to Exit");
         }
         /// <summary>
         /// Deletes the contact.
@@ -354,6 +363,12 @@ namespace UserAddressBook
                         }
                         break;
                     case 3:
+                        SearchContactsByCity();
+                        break;
+                    case 4:
+                        ViewContactsByStateOrCity();
+                        break;
+                    case 5:
                         Environment.Exit(0);
                         break;
                     default:
@@ -361,6 +376,79 @@ namespace UserAddressBook
                         flag = false;
                         break;
                 }
+            }
+        }
+        /// <summary>
+        /// UC8
+        /// Searches the contacts by city.
+        /// </summary>
+        public void SearchContactsByCity()
+        {
+            string currentAddressBook;
+            int count = 0;
+            Console.WriteLine("Please enter city name");
+            string city = Console.ReadLine();
+
+            foreach (var key in addressBookDictionary.Keys)
+            {
+                currentAddressBook = key;
+                for (int i = 0; i < addressBookDictionary[currentAddressBook].contactList.Count; i++)
+                {
+                    if (addressBookDictionary[currentAddressBook].contactList.ToArray()[i].GetCity().Equals(city))
+                    {
+                        Console.WriteLine("Contacts with city " + city + " as city in address book" + currentAddressBook + "\n"+ addressBookDictionary[currentAddressBook].contactList.ToArray()[i] + "\n");
+                    }
+                    else
+                    {
+                        count++;
+                    }
+                }
+            }
+            if (count > 0)
+            {
+                Console.WriteLine("No such contacts present in any existing address book");
+            }
+        }
+
+        /// <summary>
+        /// UC9
+        /// Views the contacts by state or city.
+        /// </summary>
+        public void ViewContactsByStateOrCity()
+        {
+            int cityCount = 0;
+            int stateCount = 0;
+            foreach (var item in addressBookDictionary.Keys)
+            {
+                string currentAddressBook = item;
+                for (int i = 0; i < addressBookDictionary[currentAddressBook].contactList.Count; i++)
+                {
+                    string state = addressBookDictionary[currentAddressBook].contactList.ToArray()[i].GetState();
+                    string city = addressBookDictionary[currentAddressBook].contactList.ToArray()[i].GetCity();
+                    string firstName = addressBookDictionary[currentAddressBook].contactList.ToArray()[i].GetFirstName();
+                    string lastName = addressBookDictionary[currentAddressBook].contactList.ToArray()[i].GetLastName();
+                    string name = firstName + " " + lastName;
+
+                    cityDictionary.Add(name, city);
+                    cityCount++;
+                    stateDictionary.Add(name, state);
+                    stateCount++;
+                }
+            }
+
+            ///TO getcount of cites and state
+            Console.WriteLine("COunt of cities : " + cityCount);
+            Console.WriteLine("Count of states : " + stateCount);
+            Console.WriteLine("Contacts by City : ");
+            foreach (var item in cityDictionary)
+            {
+                Console.WriteLine(item.Key + " " + item.Value);
+            }
+
+            Console.WriteLine("Contacts By state");
+            foreach (var item in stateDictionary)
+            {
+                Console.WriteLine(item.Key + "  " + item.Value);
             }
         }
     }
