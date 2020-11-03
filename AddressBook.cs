@@ -416,6 +416,8 @@ namespace UserAddressBook
         /// </summary>
         public void ViewContactsByStateOrCity()
         {
+            int cityCount = 0;
+            int stateCount = 0;
             foreach (var item in addressBookDictionary.Keys)
             {
                 string currentAddressBook = item;
@@ -428,10 +430,15 @@ namespace UserAddressBook
                     string name = firstName + " " + lastName;
 
                     cityDictionary.Add(name, city);
+                    cityCount++;
                     stateDictionary.Add(name, state);
+                    stateCount++;
                 }
             }
 
+            ///TO getcount of cites and state
+            Console.WriteLine("COunt of cities : " + cityCount);
+            Console.WriteLine("Count of states : " + stateCount);
             Console.WriteLine("Contacts by City : ");
             foreach (var item in cityDictionary)
             {
