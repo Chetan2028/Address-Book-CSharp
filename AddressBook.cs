@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace UserAddressBook
 {
@@ -205,7 +206,8 @@ namespace UserAddressBook
             Console.WriteLine("Enter your choice");
             Console.WriteLine("Press 1 to Add a Address book");
             Console.WriteLine("Press 2 to Access a Address book");
-            Console.WriteLine("Press 3 to Exit");
+            Console.WriteLine("Press 3 to Search person by city");
+            Console.WriteLine("Press 4 to exit");
 
         }
         /// <summary>
@@ -355,6 +357,10 @@ namespace UserAddressBook
                         }
                         break;
                     case 3:
+                        Console.WriteLine("Search Contacts by City");
+                        SearchContactsByCity();
+                        break;
+                    case 4:
                         Environment.Exit(0);
                         break;
                     default:
@@ -362,6 +368,37 @@ namespace UserAddressBook
                         flag = false;
                         break;
                 }
+            }
+        }
+        /// <summary>
+        /// UC8
+        /// Searches the contacts by city.
+        /// </summary>
+        public void SearchContactsByCity()
+        {
+            string currentAddressBook;
+            int count = 0;
+            Console.WriteLine("Please enter city name");
+            string city = Console.ReadLine();
+
+            foreach (var key in addressBookDictionary.Keys)
+            {
+                currentAddressBook = key;
+                for (int i = 0; i < addressBookDictionary[currentAddressBook].contactList.Count; i++)
+                {
+                    if (addressBookDictionary[currentAddressBook].contactList.ToArray()[i].GetCity().Equals(city))
+                    {
+                        Console.WriteLine("Contacts with city " + city + " as city in address book" + currentAddressBook + "\n"+ addressBookDictionary[currentAddressBook].contactList.ToArray()[i] + "\n");
+                    }
+                    else
+                    {
+                        count++;
+                    }
+                }
+            }
+            if (count > 0)
+            {
+                Console.WriteLine("No such contacts present in any existing address book");
             }
         }
     }
