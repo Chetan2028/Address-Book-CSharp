@@ -86,6 +86,7 @@ namespace UserAddressBook
                     {
                         contactList.Add(contact);
                         Console.WriteLine("Contact Added Successfully!!!!!");
+
                     }
                 }
             }
