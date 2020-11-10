@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace UserAddressBook
 {
@@ -112,7 +114,8 @@ namespace UserAddressBook
             Console.WriteLine("Press 6 to Sort the Contacts by  zip code");
             Console.WriteLine("Press 7 to sort the Contacts by  state");
             Console.WriteLine("Press 8 to sort the Contacts by city");
-            Console.WriteLine("Press 9 to exit");
+            Console.WriteLine("Press 9 to write data into file");
+            Console.WriteLine("Press 10 to exit");
         }
 
         /// <summary>
@@ -309,6 +312,9 @@ namespace UserAddressBook
                         break;
                     case 8:
                         SortByCity();
+                        break;
+                    case 9:
+                        WriteToFile();
                         break;
                     default:
                         flag = false;
@@ -534,6 +540,30 @@ namespace UserAddressBook
             {
                 Console.WriteLine(item);
             }
+        }
+
+        public void WriteToFile()
+        {
+            try
+            {
+                Contact c;
+                string line;
+                string filePath = @"D:\C# Programs\UserAddressBook\ContactsFile.txt";
+                using (StreamWriter streamWriter = File.AppendText(filePath))
+                {
+                    for (int i = 0; i < contactList.Count; i++)
+                    {
+                        c = contactList[i];
+                        line = c.firstName + " " + c.lastName + " " + c.phoneNumber + " " + c.zip + " " + c.state + " " + c.city + " " + c.state;
+                        streamWriter.WriteLine(line);
+                    }
+                }
+            }
+            catch (IOException)
+            {
+                Console.WriteLine("File not found");
+            }
+            
         }
     }
 }
