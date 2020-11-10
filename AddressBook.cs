@@ -94,7 +94,7 @@ namespace UserAddressBook
                         contactList.Add(contact);
                         Console.WriteLine("Contact Added Successfully!!!!!");
                     }
-                   // return;
+                    return;
                 }
             }
         }
@@ -108,8 +108,11 @@ namespace UserAddressBook
             Console.WriteLine("Press 2 to Edit contact");
             Console.WriteLine("Press 3 to Delete contact");
             Console.WriteLine("Press 4 to View Contact Details");
-            Console.WriteLine("Press 5 to Sort the COntacts by names");
-            Console.WriteLine("Press 6 to exit");
+            Console.WriteLine("Press 5 to Sort the Contacts by names");
+            Console.WriteLine("Press 6 to Sort the Contacts by  zip code");
+            Console.WriteLine("Press 7 to sort the Contacts by  state");
+            Console.WriteLine("Press 8 to sort the Contacts by city");
+            Console.WriteLine("Press 9 to exit");
         }
 
         /// <summary>
@@ -298,6 +301,15 @@ namespace UserAddressBook
                     case 5:
                         SortByNames();
                         break;
+                    case 6:
+                        SortByZip();
+                        break;
+                    case 7:
+                        SortByState();
+                        break;
+                    case 8:
+                        SortByCity();
+                        break;
                     default:
                         flag = false;
                         break;
@@ -458,7 +470,7 @@ namespace UserAddressBook
 
         /// <summary>
         /// UC11
-        /// Sorts the by names.
+        /// Sorts  by names.
         /// </summary>
         public void SortByNames()
         {
@@ -471,6 +483,56 @@ namespace UserAddressBook
             foreach (var element in nameList)
             {
                 Console.WriteLine(element);
+            }
+        }
+
+        /// <summary>
+        /// Sorts zip.
+        /// </summary>
+        public void SortByZip()
+        {
+            List<int> zipList = new List<int>();
+            foreach (Contact zip in contactList)
+            {
+                zipList.Add(zip.GetZip());
+            }
+            zipList.Sort();
+            foreach (var item in zipList)
+            {
+                Console.WriteLine(item);
+            }
+        }
+        /// <summary>
+        /// Sorts city.
+        /// </summary>
+        public void SortByCity()
+        {
+            List<string> cityList = new List<string>();
+            foreach (Contact city in contactList)
+            {
+                cityList.Add(city.GetCity());
+            }
+            cityList.Sort();
+            foreach (var item in cityList)
+            {
+                Console.WriteLine(item);
+            }
+        }
+
+        /// <summary>
+        /// Sorts the state 
+        /// </summary>
+        public void SortByState()
+        {
+            List<string> stateList = new List<string>();
+            foreach(Contact state in contactList)
+            {
+                stateList.Add(state.GetState());
+            }
+            stateList.Sort();
+            foreach (var item in stateList)
+            {
+                Console.WriteLine(item);
             }
         }
     }
