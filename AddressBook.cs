@@ -93,8 +93,8 @@ namespace UserAddressBook
                     {
                         contactList.Add(contact);
                         Console.WriteLine("Contact Added Successfully!!!!!");
-
                     }
+                   // return;
                 }
             }
         }
@@ -108,7 +108,8 @@ namespace UserAddressBook
             Console.WriteLine("Press 2 to Edit contact");
             Console.WriteLine("Press 3 to Delete contact");
             Console.WriteLine("Press 4 to View Contact Details");
-            Console.WriteLine("Press 5 to exit");
+            Console.WriteLine("Press 5 to Sort the COntacts by names");
+            Console.WriteLine("Press 6 to exit");
         }
 
         /// <summary>
@@ -294,6 +295,9 @@ namespace UserAddressBook
                     case 4:
                         ViewContact();
                         break;
+                    case 5:
+                        SortByNames();
+                        break;
                     default:
                         flag = false;
                         break;
@@ -449,6 +453,24 @@ namespace UserAddressBook
             foreach (var item in stateDictionary)
             {
                 Console.WriteLine(item.Key + "  " + item.Value);
+            }
+        }
+
+        /// <summary>
+        /// UC11
+        /// Sorts the by names.
+        /// </summary>
+        public void SortByNames()
+        {
+            List<String> nameList = new List<string>();
+            foreach (Contact contact in contactList)
+            {
+                nameList.Add(contact.GetFirstName());
+            }
+            nameList.Sort();
+            foreach (var element in nameList)
+            {
+                Console.WriteLine(element);
             }
         }
     }
