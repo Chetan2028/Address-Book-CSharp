@@ -554,7 +554,7 @@ namespace UserAddressBook
                     for (int i = 0; i < contactList.Count; i++)
                     {
                         c = contactList[i];
-                        line = c.firstName + " " + c.lastName + " " + c.phoneNumber + " " + c.zip + " " + c.state + " " + c.city + " " + c.state;
+                        line = c.firstName + " " + c.lastName + " " + c.phoneNumber + " " + c.zip + " " + c.state + " " + c.city ;
                         streamWriter.WriteLine(line);
                     }
                 }
