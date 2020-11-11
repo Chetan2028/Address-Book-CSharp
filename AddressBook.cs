@@ -4,6 +4,9 @@ using System.Text;
 using System.Linq;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Xml.Schema;
+using CsvHelper;
+using System.Globalization;
 
 namespace UserAddressBook
 {
@@ -96,7 +99,6 @@ namespace UserAddressBook
                         contactList.Add(contact);
                         Console.WriteLine("Contact Added Successfully!!!!!");
                     }
-                    return;
                 }
             }
         }
@@ -115,7 +117,9 @@ namespace UserAddressBook
             Console.WriteLine("Press 7 to sort the Contacts by  state");
             Console.WriteLine("Press 8 to sort the Contacts by city");
             Console.WriteLine("Press 9 to write data into file");
-            Console.WriteLine("Press 10 to exit");
+            Console.WriteLine("Press 10 to write data into csv file");
+            Console.WriteLine("Press 11 to Read data from csv file");
+            Console.WriteLine("Press 12 to exit");
         }
 
         /// <summary>
@@ -315,6 +319,12 @@ namespace UserAddressBook
                         break;
                     case 9:
                         WriteToFile();
+                        break;
+                    case 10:
+                        WriteToCSV(contactList);
+                        break;
+                    case 11:
+                        ReadDataFromCsv();
                         break;
                     default:
                         flag = false;
@@ -542,6 +552,9 @@ namespace UserAddressBook
             }
         }
 
+        /// <summary>
+        /// Writes to file.
+        /// </summary>
         public void WriteToFile()
         {
             try
@@ -563,7 +576,37 @@ namespace UserAddressBook
             {
                 Console.WriteLine("File not found");
             }
-            
+        }
+
+        public static void ReadDataFromCsv()
+        {
+            string filePath = @"D:\C# Programs\UserAddressBook\contacts.csv";
+            using (var reader = new StreamReader(filePath))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                var records = csv.GetRecords<Contact>().ToList();
+                foreach (Contact contact in records)
+                {
+                    Console.WriteLine("\t" + contact.firstName);
+                    Console.WriteLine("\t" + contact.lastName);
+                    Console.WriteLine("\t" + contact.address);
+                    Console.WriteLine("\t" + contact.city);
+                    Console.WriteLine("\t" + contact.state);
+                    Console.WriteLine("\t" + contact.zip);
+                    Console.WriteLine("\t" + contact.phoneNumber);
+                    Console.WriteLine("\t" + contact.email);
+                    Console.WriteLine("\n");
+                }
+            }
+        }
+        public void WriteToCSV(List<Contact> record)
+        {
+            string filePath = @"D:\C# Programs\UserAddressBook\contacts.csv";
+            using (var writer = new StreamWriter(filePath))
+            using (var csvWrite = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csvWrite.WriteRecords(record);
+            }
         }
     }
 }
