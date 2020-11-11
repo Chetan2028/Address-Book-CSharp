@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Xml.Schema;
 using CsvHelper;
 using System.Globalization;
+using Newtonsoft.Json;
 
 namespace UserAddressBook
 {
@@ -119,7 +120,8 @@ namespace UserAddressBook
             Console.WriteLine("Press 9 to write data into file");
             Console.WriteLine("Press 10 to write data into csv file");
             Console.WriteLine("Press 11 to Read data from csv file");
-            Console.WriteLine("Press 12 to exit");
+            Console.WriteLine("Press 12 to Write data into json");
+            Console.WriteLine("Press 13 to exit");
         }
 
         /// <summary>
@@ -287,7 +289,7 @@ namespace UserAddressBook
         public void AddressBookMenu()
         {
             bool flag = true;
-            while(flag)
+            while (flag)
             {
                 DisplayMenu();
                 int choice = Convert.ToInt32(Console.ReadLine());
@@ -326,12 +328,15 @@ namespace UserAddressBook
                     case 11:
                         ReadDataFromCsv();
                         break;
+                    case 12:
+                        WriteIntoJson();
+                        break;
                     default:
                         flag = false;
                         break;
                 }
             }
-            
+
         }
 
         /// <summary>
@@ -428,7 +433,7 @@ namespace UserAddressBook
                 {
                     if (addressBookDictionary[currentAddressBook].contactList.ToArray()[i].GetCity().Equals(city))
                     {
-                        Console.WriteLine("Contacts with city " + city + " as city in address book" + currentAddressBook + "\n"+ addressBookDictionary[currentAddressBook].contactList.ToArray()[i] + "\n");
+                        Console.WriteLine("Contacts with city " + city + " as city in address book" + currentAddressBook + "\n" + addressBookDictionary[currentAddressBook].contactList.ToArray()[i] + "\n");
                     }
                     else
                     {
@@ -541,7 +546,7 @@ namespace UserAddressBook
         public void SortByState()
         {
             List<string> stateList = new List<string>();
-            foreach(Contact state in contactList)
+            foreach (Contact state in contactList)
             {
                 stateList.Add(state.GetState());
             }
@@ -567,7 +572,7 @@ namespace UserAddressBook
                     for (int i = 0; i < contactList.Count; i++)
                     {
                         c = contactList[i];
-                        line = c.firstName + " " + c.lastName + " " + c.phoneNumber + " " + c.zip + " " + c.state + " " + c.city ;
+                        line = c.firstName + " " + c.lastName + " " + c.phoneNumber + " " + c.zip + " " + c.state + " " + c.city;
                         streamWriter.WriteLine(line);
                     }
                 }
@@ -578,6 +583,9 @@ namespace UserAddressBook
             }
         }
 
+        /// <summary>
+        /// Reads the data from CSV.
+        /// </summary>
         public static void ReadDataFromCsv()
         {
             string filePath = @"D:\C# Programs\UserAddressBook\contacts.csv";
@@ -599,6 +607,10 @@ namespace UserAddressBook
                 }
             }
         }
+        /// <summary>
+        /// Writes to CSV.
+        /// </summary>
+        /// <param name="record">The record.</param>
         public void WriteToCSV(List<Contact> record)
         {
             string filePath = @"D:\C# Programs\UserAddressBook\contacts.csv";
@@ -607,6 +619,31 @@ namespace UserAddressBook
             {
                 csvWrite.WriteRecords(record);
             }
+        }
+
+        /// <summary>
+        /// Writes the into json.
+        /// </summary>
+        public void WriteIntoJson()
+        {
+            string importFilePath = @"D:\C# Programs\UserAddressBook\contacts.csv";
+            string exportFilePath = @"D:\C# Programs\UserAddressBook\contacts.json";
+
+            //reading csv file
+            using (var reader = new StreamReader(importFilePath))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                var records = csv.GetRecords<Contact>().ToList();
+
+                //write data to json file
+                JsonSerializer jsonSerializer = new JsonSerializer();
+                using (StreamWriter streamWriter = new StreamWriter(exportFilePath))
+                using (JsonWriter writer = new JsonTextWriter(streamWriter))
+                {
+                    jsonSerializer.Serialize(writer, records);
+                }
+            }
+           
         }
     }
 }
